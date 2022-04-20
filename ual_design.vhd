@@ -1,13 +1,15 @@
 library ieee;
-	use ieee.std_logic_1164.all;
-	use ieee.numeric_std.all;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_unsigned.all;
+use IEEE.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
 
 entity ual is
   port(
-    a, b : in  std_logic_vector(3 downto 0);	
-    sel_fct   : in  std_logic_vector(3 downto 0);						
-    SR_IN : in  std_logic_vector(1 downto 0);
-    SR_OUT: out  std_logic_vector(1 downto 0);
+    a, b : in std_logic_vector(3 downto 0);	
+    sel_fct   : in std_logic_vector(3 downto 0);						
+    SR_IN : in std_logic_vector(1 downto 0);
+    SR_OUT: out std_logic_vector(1 downto 0);
     S : out std_logic_vector(7 downto 0)
   );
 end entity;
@@ -37,33 +39,32 @@ begin
       when "0010" => 
         S(7 downto 4) <= (others => '0'); 
         S(3 downto 1) <= A(2 downto 0); 
-        S(0) <= SR_IN_R;
-        SR_OUT_L <= A(3); 
-        SR_OUT_R <= '0';
+        S(0) <= SR_IN(0);
+        SR_OUT(1) <= A(3); 
+        SR_OUT(0) <= '0';
 
       --S = Déc. droite B sur 4 bits (avec SR_IN_L) | SR_IN_L pour le bit entrant et SR_OUT_R pour le bit sortant
       when "0011" =>
         S(7 downto 4) <= (others => '0');
-        S(3) <= SR_IN_L; 
+        S(3) <= SR_IN(1); 
         S(2 downto 0) <= B(3 downto 1);
-        SR_OUT_L <= '0'; 
-        SR_OUT_R <= B(0);
+        SR_OUT(1) <= '0'; 
+        SR_OUT(0) <= B(0);
 
       --S = Déc. gauche B sur 4 bits (avec SR_IN_R) | SR_IN_R pour le bit entrant et SR_OUT_L pour le bit sortant
       when "0100" => 
         S(7 downto 4) <= (others => '0'); 
         S(3 downto 1) <= B(2 downto 0); 
-        S(0) <= SR_IN_R;
-        SR_OUT_L <= B(3);
-        SR_OUT_R <= '0';
+        S(0) <= SR_IN(0);
+        SR_OUT(1) <= B(3);
+        SR_OUT(0) <= '0';
 
       when "0101" =>							
-        S <= a * b;
+        S <= a*b;
         SR_OUT <= "00";
 
       when "0110" =>						
         S <= a + b;
-        SR_IN <= "01";
         SR_OUT <= "00";
 
       when "0111" =>							
@@ -71,9 +72,9 @@ begin
         SR_OUT <= "00";
 
       when "1000" =>							
-        S <= a + b;
-        SR_IN <= "00";
-        SR_OUT <= "00";
+        	S(7 downto 4) <= (others => '0');
+            S(3 downto 0) <= a - b;
+            SR_OUT <= "00";
 
       --S = A | SR_OUT_L = 0 et SR_OUT_R = 0
       when "1001" =>							
