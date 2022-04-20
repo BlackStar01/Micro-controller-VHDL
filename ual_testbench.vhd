@@ -32,14 +32,13 @@ begin
 	My_UAL_underTest : ual
 
       port map (
-      		a => a_sim ,
+      	a => a_sim ,
             b => b_sim,
             sel_fct => sel_fct_sim, 
             SR_IN => SR_IN_sim,
-      		SR_OUT => SR_OUT_sim,
-      		S => s_sim 
+      	SR_OUT => SR_OUT_sim,
+      	S => s_sim 
       );
-      
       
       MyStimulus_Proc : process
       begin

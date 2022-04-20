@@ -57,23 +57,19 @@ begin
         SR_OUT_L <= B(3);
         SR_OUT_R <= '0';
 
-      --S = A * B multiplication binaire | SR_OUT_L = 0 et SR_OUT_R = 0
       when "0101" =>							
         S <= a * b;
         SR_OUT <= "00";
 
-      --S = A + B addition binaire avec SR_IN_R comme retenue d’entrée | SR_OUT_L = 0 et SR_OUT_R = 0
       when "0110" =>						
         S <= a + b;
         SR_IN <= "01";
         SR_OUT <= "00";
 
-      --S = A + B addition binaire sans retenue d’entrée | SR_OUT_L = 0 et SR_OUT_R = 0
       when "0111" =>							
         S <= a + b;
         SR_OUT <= "00";
 
-      --S = A – B soustraction binaire | SR_OUT_L = 0 et SR_OUT_R = 0
       when "1000" =>							
         S <= a + b;
         SR_IN <= "00";
